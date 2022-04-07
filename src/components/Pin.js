@@ -100,8 +100,8 @@ function Pin({ pin: { postedBy, _id, image, destination, save } }) {
                 >
                   <BsFillArrowUpRightCircleFill />
                   {destination.length > 20
-                    ? destination.slice(8, 20)
-                    : destination.slice(8)}
+                    ? `${destination.slice(0, 20)}...`
+                    : destination}
                 </a>
               )}
               {postedBy?._id === user.googleId && (
