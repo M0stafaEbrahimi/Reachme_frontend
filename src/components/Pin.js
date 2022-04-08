@@ -100,8 +100,8 @@ function Pin({ pin: { postedBy, _id, image, destination, save } }) {
                 >
                   <BsFillArrowUpRightCircleFill />
                   {destination.length > 20
-                    ? `${destination.slice(0, 20)}...`
-                    : destination}
+                    ? destination.slice(8, 20)
+                    : destination.slice(8)}
                 </a>
               )}
               {postedBy?._id === user.googleId && (
@@ -121,7 +121,7 @@ function Pin({ pin: { postedBy, _id, image, destination, save } }) {
         )}
       </div>
       <Link
-        to={`user-profile${postedBy?._id}`}
+        to={`user-profile/${postedBy?._id}`}
         className="flex gap-2 mt-2 items-center"
       >
         <img
