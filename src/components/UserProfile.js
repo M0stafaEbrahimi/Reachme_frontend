@@ -34,10 +34,10 @@ function UserProfile() {
       const createdPinsQuery = userCreatedPinsQuery(userId);
       client.fetch(createdPinsQuery).then((data) => setPins(data));
     } else {
-      if (text === "Saved") {
-        const savedPinsQuery = userSavedPinsQuery(userId);
-        client.fetch(savedPinsQuery).then((data) => setPins(data));
-      }
+      const savedPinsQuery = userSavedPinsQuery(userId);
+      client.fetch(savedPinsQuery).then((data) => {
+        setPins(data);
+      });
     }
   }, [text, userId]);
   const logout = () => {
@@ -70,7 +70,7 @@ function UserProfile() {
             <div className="absolute top-0 right-0 z-1 p-2">
               {userId === user._id && (
                 <GoogleLogout
-                  clientId={process.env.REACT_APP_GOOGLE_API_TOKEN}
+                  clientId={`${process.env.REACT_APP_GOOGLE_API_TOKEN}`}
                   render={(renderProps) => (
                     <button
                       type="button"

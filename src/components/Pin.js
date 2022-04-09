@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { MdDownloadForOffline } from "react-icons/md";
@@ -12,9 +12,8 @@ function Pin({ pin: { postedBy, _id, image, destination, save } }) {
   const navigate = useNavigate();
   const user = fetchUser();
   const alreadySaved = !!save?.filter(
-    (item) => item.postedBy._id === user.googleId
+    (item) => item.postedBy?._id === user?.googleId
   )?.length;
-  console.log(_id);
   const savePost = (id) => {
     if (!alreadySaved) {
       client
@@ -23,9 +22,10 @@ function Pin({ pin: { postedBy, _id, image, destination, save } }) {
         .insert("after", "save[-1]", [
           {
             _key: uuidv4(),
+            userId: user?.googleId,
             postedBy: {
               _type: "postedBy",
-              _ref: user.googleId,
+              _ref: user?.googleId,
             },
           },
         ])
@@ -45,7 +45,7 @@ function Pin({ pin: { postedBy, _id, image, destination, save } }) {
       <div
         onMouseEnter={() => setPostHovered(true)}
         onMouseLeave={() => setPostHovered(false)}
-        onClick={() => navigate(`pin-detail/${_id}`)}
+        onClick={() => navigate(`/pin-detail/${_id}`)}
         className="relative cursor-zoom-in w-auto hover:shadow-lg rounded-lg overflow-hidden transition-all duration-500 ease-in-out"
       >
         <img
@@ -75,7 +75,7 @@ function Pin({ pin: { postedBy, _id, image, destination, save } }) {
                   disabled
                   className="bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none"
                 >
-                  Saved
+                  {save?.length} Saved
                 </button>
               ) : (
                 <button
@@ -104,7 +104,7 @@ function Pin({ pin: { postedBy, _id, image, destination, save } }) {
                     : destination}
                 </a>
               )}
-              {postedBy?._id === user.googleId && (
+              {postedBy?._id === user?.googleId && (
                 <button
                   type="button"
                   onClick={(e) => {
@@ -121,7 +121,7 @@ function Pin({ pin: { postedBy, _id, image, destination, save } }) {
         )}
       </div>
       <Link
-        to={`user-profile/${postedBy?._id}`}
+        to={`/user-profile/${postedBy?._id}`}
         className="flex gap-2 mt-2 items-center"
       >
         <img

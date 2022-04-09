@@ -5,7 +5,7 @@ import { Link, Route, Routes } from "react-router-dom";
 import { Sidebar, UserProfile } from "../components";
 import Pins from "./Pins";
 import { client } from "../client";
-import logo from "../assets/logo.png";
+import logo from "../assets/reachme.png";
 import { userQuery } from "../utils/data";
 import { fetchUser } from "../utils/fetchUser";
 
@@ -17,7 +17,6 @@ function Home() {
   useEffect(() => {
     const query = userQuery(userInfo?.googleId);
     client.fetch(query).then((data) => {
-      console.log(data);
       setUser(data[0]);
     });
   }, []);
@@ -41,7 +40,7 @@ function Home() {
             <img src={logo} alt="logo" className="w-28" />
           </Link>
           <Link to={`user-profile/${user?._id}`}>
-            <img src={user?.image} alt="logo" className="w-28" />
+            <img src={user?.image} alt="logo" className="w-10" />
           </Link>
         </div>
         {toggleSidebar && (
